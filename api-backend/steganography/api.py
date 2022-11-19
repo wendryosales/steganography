@@ -50,7 +50,6 @@ class ImageViewSet(
 class EncodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
     queryset = ImageHidden.objects.all()
     serializer_class = RequestImageHiddenSerializer
-    parser_classes = (MultiPartParser,)
 
     def create(self, request, *args, **kwargs):
         pk_original_image = request.data["image"]
@@ -75,4 +74,17 @@ class EncodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
             response,
             status=status.HTTP_201_CREATED,
             headers=headers,
+        )
+
+
+class DecodeViewSet(RetrieveModelMixin, viewsets.GenericViewSet):
+    queryset = ImageHidden.objects.all()
+    serializer_class = ImageHiddenSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        image = self.get_object()
+        url_image = image.image_hidden
+        message_decoded = steganography.decode(url_image)
+        return Response(
+            {"message": message_decoded}, status=status.HTTP_200_OK
         )

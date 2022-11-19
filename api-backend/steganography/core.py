@@ -61,10 +61,13 @@ class Encode(Message):
             new_pixels.append(pixel)
 
         new_pixels.extend(original_pixels[pixels_necessary:])
+        return self.__save_image(new_pixels)
+
+    def __save_image(self, pixels):
+        """ Save the image """
         new_image = Image.new("RGB", self.image.size)
-        new_image.putdata(new_pixels)
-        id = uuid.uuid4().hex
-        path = f"media/images-hidden/{id}.bmp"
+        new_image.putdata(pixels)
+        path = f"media/images-hidden/{uuid.uuid4().hex}.bmp"
         new_image.save(path, format='BMP')
         return path
 
@@ -141,7 +144,4 @@ class Steganography(Decode, Encode, Message):
 
 
 if __name__ == "__main__":
-    url = "media/images/big_brother_is_watching_u_original.bmp"
-    decodeUrl = 'media/images-hidden/1d4aaa99db024a45ae1b2ab37d60b78b.bmp'
-    # instance = Steganography(url)
     instance = Steganography()
