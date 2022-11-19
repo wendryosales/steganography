@@ -61,7 +61,7 @@ class Encode(Message):
             new_pixels.append(pixel)
 
         new_pixels.extend(original_pixels[pixels_necessary:])
-        return self.__save_image(new_pixels)
+        return self.save_image(new_pixels)
 
     def save_image(self, pixels):
         """ Save the image """

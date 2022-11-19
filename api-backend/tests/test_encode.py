@@ -2,7 +2,6 @@ import os
 import uuid
 
 from PIL import Image
-
 from steganography.core import Encode
 
 # CONSTANTS
@@ -13,7 +12,7 @@ DIRECTORY = "tests/temp/"
 
 class EncodeTest(Encode):
     # change the directory to a temporary directory
-    def _Encode__save_image(self, pixels):
+    def save_image(self, pixels):
         new_image = Image.new("RGB", self.image.size)
         new_image.putdata(pixels)
         path = f"{DIRECTORY}{uuid.uuid4().hex}.bmp"
