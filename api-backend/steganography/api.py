@@ -6,8 +6,12 @@ from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
-from .models import Image
-from .serializers import ImageSerializer
+from .core import Steganography
+from .models import Image, ImageHidden
+from .serializers import (ImageHiddenSerializer, ImageSerializer,
+                          RequestImageHiddenSerializer)
+
+steganography = Steganography()
 
 
 class ImageViewSet(
@@ -20,10 +24,10 @@ class ImageViewSet(
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+        response_data = serializer.save()
         headers = self.get_success_headers(serializer.data)
         response = {
-            "id": serializer.data["id"],
+            "id": response_data.id,
             "message": "Image uploaded successfully",
         }
         return Response(
@@ -41,3 +45,34 @@ class ImageViewSet(
                 "attachment; filename=original_" + queryset.image.name
             )
             return response
+
+
+class EncodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
+    queryset = ImageHidden.objects.all()
+    serializer_class = RequestImageHiddenSerializer
+    parser_classes = (MultiPartParser,)
+
+    def create(self, request, *args, **kwargs):
+        pk_original_image = request.data["image"]
+        message = request.data["message"]
+        image_original = Image.objects.get(id=pk_original_image)
+        url_image = image_original.image.path
+        encoded_image = steganography.encode(url_image, message)
+        data = {
+            "image": image_original.id,
+            "image_hidden": encoded_image,
+        }
+        serializer = ImageHiddenSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        response_data = serializer.save()
+        headers = self.get_success_headers(serializer.data)
+        response = {
+            "id": response_data.id,
+            "message": "Image encoded successfully",
+        }
+
+        return Response(
+            response,
+            status=status.HTTP_201_CREATED,
+            headers=headers,
+        )

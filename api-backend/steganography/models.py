@@ -16,16 +16,10 @@ class Image(models.Model):
         User, on_delete=models.SET_NULL, null=True, blank=True
     )
 
-    def __str__(self):
-        return self.id
-
 
 class ImageHidden(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    image_hidden = models.ImageField(upload_to="media/images-hidden/")
-
-    def __str__(self):
-        return self.id
+    image_hidden = models.FilePathField(path="media/images-hidden")
 
 
 class MessageDecode(models.Model):
