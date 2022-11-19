@@ -63,7 +63,7 @@ class Encode(Message):
         new_pixels.extend(original_pixels[pixels_necessary:])
         return self.__save_image(new_pixels)
 
-    def __save_image(self, pixels):
+    def save_image(self, pixels):
         """ Save the image """
         new_image = Image.new("RGB", self.image.size)
         new_image.putdata(pixels)
