@@ -1,0 +1,1 @@
+docker exec steganography_backend_1 python manage.py createsuperuser

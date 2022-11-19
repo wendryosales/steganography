@@ -13,11 +13,11 @@ services:
       - backend
   backend:
     build:
-      context: ./api-backend
+      context: ./backend
       dockerfile: Dockerfile
     command: python /app/manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./api-backend:/app
+      - ./backend:/app
     ports:
       - 8000:8000
     depends_on:
