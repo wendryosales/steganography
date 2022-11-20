@@ -1,14 +1,14 @@
-import { Container } from "./styles/Container";
-import { DropContainer } from "./styles/DropContainer";
-import { FileInfo } from "../FileInfo";
-import { removefile } from "../../redux/actions";
-import { renderDragMessage } from "./renderDragMessage";
-import { useAppDispatch } from "../../redux/hooks";
+import SendIcon from '@mui/icons-material/Send';
+import Fab from "@mui/material/Fab";
 import { useCallback, useState } from "react";
 import { useDropzone } from 'react-dropzone';
+import { removefile } from "../../redux/actions";
+import { useAppDispatch } from "../../redux/hooks";
 import api from '../../services/api';
-import Fab from "@mui/material/Fab";
-import SendIcon from '@mui/icons-material/Send';
+import { FileInfo } from "../FileInfo";
+import { renderDragMessage } from "./renderDragMessage";
+import { Container } from "./styles/Container";
+import { DropContainer } from "./styles/DropContainer";
 
 const Dropzone = () => {
 
@@ -39,9 +39,9 @@ const Dropzone = () => {
 
   const onSubmitted = () => {
     const data = new FormData();
-    data.append('file', fileInfo as Blob);
+    data.append('image', fileInfo as Blob);
 
-    api.post('/upload', data)
+    api.post("/image/", data);
   }
 
   return (
