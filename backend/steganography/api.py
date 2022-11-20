@@ -1,25 +1,39 @@
+import mimetypes
+import os
+from urllib.parse import unquote
 from wsgiref.util import FileWrapper
 
-from django.http import HttpResponse
+from django.conf import settings
+from django.http import FileResponse, HttpResponse
 from rest_framework import status, viewsets
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.mixins import (CreateModelMixin, ListModelMixin,
+                                   RetrieveModelMixin)
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
 from .core import Steganography
 from .models import Image, ImageHidden
-from .serializers import (ImageHiddenSerializer, ImageSerializer,
-                          RequestImageHiddenSerializer)
+from .serializers import (ImageHiddenSerializer, ImageListSerializer,
+                          ImageSerializer, RequestImageHiddenSerializer)
 
 steganography = Steganography()
 
 
 class ImageViewSet(
+    ListModelMixin,
     CreateModelMixin, RetrieveModelMixin, viewsets.GenericViewSet
 ):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
     parser_classes = (MultiPartParser,)
+
+    def get_serializer(self, *args, **kwargs):
+        if self.action == "create":
+            return ImageSerializer(*args, **kwargs)
+        return ImageListSerializer(
+            *args, **kwargs, context={'request': self.request}
+        )
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -89,3 +103,18 @@ class DecodeViewSet(RetrieveModelMixin, viewsets.GenericViewSet):
         return Response(
             {"message": message_decoded}, status=status.HTTP_200_OK
         )
+
+
+@api_view(["GET"])
+@permission_classes([])
+def get_media_path(request, path):
+    if not os.path.exists(f"{settings.MEDIA_ROOT}/{path}"):
+        return Response("No such file exists.", status=404)
+
+    mimetype, encoding = mimetypes.guess_type(path, strict=True)
+    if not mimetype:
+        mimetype = "text/html"
+    file_path = unquote(
+        os.path.join(settings.MEDIA_ROOT, path)
+    ).encode("utf-8")
+    return FileResponse(open(file_path, "rb"), content_type=mimetype)

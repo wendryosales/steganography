@@ -24,3 +24,10 @@ class ImageHiddenSerializer(serializers.ModelSerializer):
 
     def __str__(self):
         return self.image
+
+
+class ImageListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Image
+        fields = ('id', 'image', 'url')

@@ -7,5 +7,5 @@ export const actions = [
   { icon: <AddAPhotoIcon />, name: 'Upload', link: '/upload' },
   { icon: <HttpsIcon />, name: 'Criptografar', link: '/encode' },
   { icon: <LockOpenIcon />, name: 'Descriptografar', link: '/decode' },
-  { icon: <SaveIcon />, name: 'Save', link: '/save' },
+  { icon: <SaveIcon />, name: 'Salvar', link: '/save' },
 ];

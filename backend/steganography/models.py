@@ -5,7 +5,7 @@ from django.db import models
 
 class Image(models.Model):
     image = models.FileField(
-        upload_to="media/images/",
+        upload_to="images/",
         validators=[
             validators.FileExtensionValidator(
                 allowed_extensions=["bmp"]
@@ -19,7 +19,7 @@ class Image(models.Model):
 
 class ImageHidden(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    image_hidden = models.FilePathField(path="media/images-hidden")
+    image_hidden = models.FilePathField(path="images-hidden/")
 
 
 class MessageDecode(models.Model):
