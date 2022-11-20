@@ -5,13 +5,22 @@ import { File } from "../FileInfo/types";
 import { renderDragMessage } from "./renderDragMessage";
 import { Container } from "./styles/Container";
 import { DropContainer } from "./styles/DropContainer";
+import { IDropzoneProps, IFiles } from "./types";
 
-const Dropzone = () => {
+const Dropzone = ({ setHasFile }: IDropzoneProps) => {
+
   const [ fileInfo, setFileInfo ] = useState<File | null>(null);
-  const onDrop = useCallback((files: File[]) => {
-    setFileInfo(files[0]);
-    console.log(files[0])
+
+  const onDrop = useCallback((files: IFiles) => {
+    const preview = URL.createObjectURL(files[0] as unknown as MediaSource);
+    setFileInfo({
+      preview,
+      name: files[0].name,
+      size: files[0].size,
+    });
+    setHasFile(true);
   }, [])
+
   const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone(
     {
       onDrop,
@@ -21,13 +30,19 @@ const Dropzone = () => {
       } 
   })
 
+  const onDelete = useCallback(() => {
+    setFileInfo(null);
+    setHasFile(false);
+  }, [])
+
   return (
     <Container>
       {
         !!fileInfo ? (
           <FileInfo
             file={fileInfo}
-            onDelete={() => setFileInfo(null)}/>
+            onDelete={onDelete}/>
+          
         ) : (
           <DropContainer
             {...getRootProps()} 

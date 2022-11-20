@@ -1,4 +1,3 @@
-import CloseIcon from '@mui/icons-material/Close';
 import styled from "styled-components";
 import { IImagePreview } from "./types";
 
@@ -36,7 +35,7 @@ export const FileContainer = styled.div`
       height: 100%;
 
       strong {
-        width: 200px;
+        width: 160px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -53,14 +52,3 @@ export const ImagePreview = styled.div`
   width: 50px;
   height: 100%;
 `;
-
-export const ButtonClose = styled(CloseIcon)`
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    color: #e57878;
-  }
-`

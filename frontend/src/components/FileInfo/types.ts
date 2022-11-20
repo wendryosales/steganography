@@ -1,4 +1,5 @@
 export interface File {
+    preview: string;
     name: string;
     size: number;
 }
