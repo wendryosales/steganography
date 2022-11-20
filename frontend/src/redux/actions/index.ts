@@ -1,10 +1,13 @@
-import { ACTION_TESTE } from './types';
+import { File } from '../../components/FileInfo/types';
+import { ADD_FILE, REMOVE_FILE } from './constants';
 
-export const actionTeste = () => {
+export const addfile = (file: File) => {
   return {
-    type: ACTION_TESTE,
+    type: ADD_FILE,
     payload: {
-      teste: 'teste',
+      file
     },
   };
 }
+
+export const removefile = () => ({ type: REMOVE_FILE});

@@ -1,1 +1,3 @@
-export const ACTION_TESTE = 'ACTION_TESTE';
+export interface Action {
+  
+}

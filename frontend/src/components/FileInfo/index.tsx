@@ -3,8 +3,8 @@ import IconButton from '@mui/material/IconButton';
 import { Container, FileContainer, ImagePreview } from "./style";
 import { IFileInfoProps } from "./types";
 
-export const FileInfo = ({ file, onDelete }: IFileInfoProps) => {
-  const { name, size, preview } = file;
+export const FileInfo = ({ preview, file, onDelete }: IFileInfoProps) => {
+  const { name, size } = file;
   const to_MB = 0.000001
   const sizeInMB = (size * to_MB).toFixed(2);
   return (

@@ -1,24 +1,26 @@
-import { useCallback, useState } from "react";
-import { useDropzone } from 'react-dropzone';
-import { FileInfo } from "../FileInfo";
-import { File } from "../FileInfo/types";
-import { renderDragMessage } from "./renderDragMessage";
 import { Container } from "./styles/Container";
 import { DropContainer } from "./styles/DropContainer";
-import { IDropzoneProps, IFiles } from "./types";
+import { FileInfo } from "../FileInfo";
+import { removefile } from "../../redux/actions";
+import { renderDragMessage } from "./renderDragMessage";
+import { useAppDispatch } from "../../redux/hooks";
+import { useCallback, useState } from "react";
+import { useDropzone } from 'react-dropzone';
+import api from '../../services/api';
+import Fab from "@mui/material/Fab";
+import SendIcon from '@mui/icons-material/Send';
 
-const Dropzone = ({ setHasFile }: IDropzoneProps) => {
+const Dropzone = () => {
 
   const [ fileInfo, setFileInfo ] = useState<File | null>(null);
+  const [ preview, setPreview ] = useState<string>('');
 
-  const onDrop = useCallback((files: IFiles) => {
-    const preview = URL.createObjectURL(files[0] as unknown as MediaSource);
-    setFileInfo({
-      preview,
-      name: files[0].name,
-      size: files[0].size,
-    });
-    setHasFile(true);
+  const dispatch = useAppDispatch();
+
+  const onDrop = useCallback((files: File[]) => {
+    const preview = URL.createObjectURL(files[0]);
+    setFileInfo(files[0]);
+    setPreview(preview);
   }, [])
 
   const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone(
@@ -32,30 +34,48 @@ const Dropzone = ({ setHasFile }: IDropzoneProps) => {
 
   const onDelete = useCallback(() => {
     setFileInfo(null);
-    setHasFile(false);
+    dispatch(removefile());
   }, [])
 
+  const onSubmitted = () => {
+    const data = new FormData();
+    data.append('file', fileInfo as Blob);
+
+    api.post('/upload', data)
+  }
+
   return (
-    <Container>
+    <>
+      <Container>
+        {
+          !!fileInfo ? (
+            <FileInfo
+              file={fileInfo}
+              preview={preview}
+              onDelete={onDelete}/>
+            
+          ) : (
+            <DropContainer
+              {...getRootProps()} 
+              isDragActive={isDragActive} 
+              isDragReject={isDragReject}>
+              <input {...getInputProps()} />
+              {
+                renderDragMessage(isDragActive, isDragReject)
+              }
+            </DropContainer>
+          )
+        }
+      </Container>
       {
-        !!fileInfo ? (
-          <FileInfo
-            file={fileInfo}
-            onDelete={onDelete}/>
-          
-        ) : (
-          <DropContainer
-            {...getRootProps()} 
-            isDragActive={isDragActive} 
-            isDragReject={isDragReject}>
-            <input {...getInputProps()} />
-            {
-              renderDragMessage(isDragActive, isDragReject)
-            }
-          </DropContainer>
+        !!fileInfo && (
+          <Fab  variant="extended" sx={{ mt: 1 }} onClick={onSubmitted}>
+            <p> Enviar arquivo </p>
+            <SendIcon color="success" sx={{ ml: 1 }} />
+          </Fab>
         )
       }
-    </Container>
+    </>
   )
 }
 
