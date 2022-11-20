@@ -2,17 +2,25 @@ import SendIcon from '@mui/icons-material/Send';
 import Fab from "@mui/material/Fab";
 import { useCallback, useState } from "react";
 import { useDropzone } from 'react-dropzone';
-import { removefile } from "../../redux/actions";
+import { uploadFail, uploadSucess } from '../../redux/actions';
 import { useAppDispatch } from "../../redux/hooks";
 import api from '../../services/api';
+import BoxLoading from '../boxloading';
 import { FileInfo } from "../FileInfo";
 import { renderDragMessage } from "./renderDragMessage";
 import { Container } from "./styles/Container";
 import { DropContainer } from "./styles/DropContainer";
 
+const initalLoadingBox = {
+  isLoading: false,
+  progress: 0,
+  done: false,
+};
+
 const Dropzone = () => {
 
   const [ fileInfo, setFileInfo ] = useState<File | null>(null);
+  const [ loadingBox, setLoadingBox ] = useState(initalLoadingBox);
   const [ preview, setPreview ] = useState<string>('');
 
   const dispatch = useAppDispatch();
@@ -34,19 +42,39 @@ const Dropzone = () => {
 
   const onDelete = useCallback(() => {
     setFileInfo(null);
-    dispatch(removefile());
   }, [])
 
   const onSubmitted = () => {
     const data = new FormData();
     data.append('image', fileInfo as Blob);
 
-    api.post("/image/", data);
+    setFileInfo(null);
+    const loading = { isLoading: true, progress: 0, done: false };
+    setLoadingBox(loading)
+    api.post("/image/", data, {
+      onUploadProgress: (e) => {
+        const progress = Math.round((e.loaded * 100) / (e.total || 0));
+        const loading = { isLoading: true, progress, done: false };
+        setLoadingBox(loading)
+      }
+    }).then((response) => {
+      setLoadingBox((prev) => ({ 
+        ...prev, done: true, 
+        link: response.data.url
+      }))
+      dispatch(uploadSucess())
+    }
+    ).catch((error) => {
+      console.log(error);
+      dispatch(uploadFail())
+    }
+    )
   }
 
   return (
     <>
       <Container>
+        <BoxLoading {...loadingBox} /> 
         {
           !!fileInfo ? (
             <FileInfo

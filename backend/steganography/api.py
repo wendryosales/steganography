@@ -28,6 +28,7 @@ class ImageViewSet(
         headers = self.get_success_headers(serializer.data)
         response = {
             "id": response_data.id,
+            "url": f'/image/{response_data.id}',
             "message": "Image uploaded successfully",
         }
         return Response(

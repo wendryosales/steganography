@@ -1,2 +1,2 @@
-export const ADD_FILE = 'ADD_FILE';
-export const REMOVE_FILE = 'REMOVE_FILE';
+export const UPLOAD_SUCESS = "UPLOAD_SUCESS";
+export const UPLOAD_FAIL = "UPLOAD_FAIL";
