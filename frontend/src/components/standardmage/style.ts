@@ -14,6 +14,13 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 768px) {
+        .MuiImageList-root {
+            width: 300px;
+            height: 300px;
+        }
+    }
 `;
 
 export const ImageHoverItem = styled(ImageListItem)`
