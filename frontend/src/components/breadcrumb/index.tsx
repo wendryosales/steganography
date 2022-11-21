@@ -1,13 +1,13 @@
 // Third-party imports
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import HomeIcon from '@mui/icons-material/Home';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
 // Local imports
 import { BreadcrumbsContainer } from './style';
+import { IBreadCrumbProps } from './types';
 
-export default function BreadCrumb() {
+export default function BreadCrumb({ page, icon }: IBreadCrumbProps) {
   return (
       <BreadcrumbsContainer aria-label="breadcrumb">
         <Link
@@ -17,14 +17,16 @@ export default function BreadCrumb() {
           href="/"
         >
           <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-          Home
+          Início
         </Link>
         <Typography
           sx={{ display: 'flex', alignItems: 'center' }}
           color="text.primary"
         >
-          <AddAPhotoIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-          Upload
+          <>
+            {icon}
+            {page}
+          </>
         </Typography>
       </BreadcrumbsContainer>
   );

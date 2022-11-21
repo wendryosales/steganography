@@ -1,6 +1,6 @@
 import Tilt from 'react-parallax-tilt';
 import image from "../../assets/background.png";
-import { Image } from '../../components/Image';
+import { Image } from '../../components/logo';
 import ControlledOpenSpeedDial from "../../components/speed-dial";
 import { Page } from "../style";
 

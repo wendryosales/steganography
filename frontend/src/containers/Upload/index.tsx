@@ -1,3 +1,4 @@
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import BreadCrumb from '../../components/breadcrumb';
@@ -8,12 +9,11 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import { Page } from "../style";
 
-
 const UploadPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const open = useAppSelector((state: RootState) => state.uploadReducer);
+  const open = useAppSelector((state: RootState) => state.upload);
 
   const handleClose = () => {
     dispatch(uploadClose());
@@ -21,7 +21,9 @@ const UploadPage = () => {
 
   return (
     <Page>
-      <BreadCrumb />
+      <BreadCrumb
+        page="upload"
+        icon={<AddAPhotoIcon sx={{ mr: 0.5 }} fontSize="inherit" />}/>
       <Dropzone />
       <ControlledOpenSpeedDial />
       <Snackbar open={open === 'sucess'} autoHideDuration={6000} onClose={handleClose}>

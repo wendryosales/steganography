@@ -27,7 +27,12 @@ class ImageHiddenSerializer(serializers.ModelSerializer):
 
 
 class ImageListSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
 
     class Meta:
         model = Image
-        fields = ('id', 'image', 'url')
+        fields = ('id', 'image', 'url', 'name')
+
+    def get_name(self, obj):
+        remove_path = obj.image.name.split('/')[-1]
+        return remove_path
