@@ -19,7 +19,7 @@ class Image(models.Model):
 
 class ImageHidden(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    image_hidden = models.FilePathField(path="images-hidden/")
+    image_hidden = models.FilePathField(path="media/images-hidden/")
 
 
 class MessageDecode(models.Model):

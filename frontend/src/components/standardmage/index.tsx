@@ -2,17 +2,10 @@ import ImageList from '@mui/material/ImageList';
 import { useAppSelector } from "../../redux/hooks";
 import { RootState } from "../../redux/store";
 import { Container, ImageHoverItem } from './style';
+import { IStandardImageProps } from './type';
 
-const StandardImage = () => {
+const StandardImage = ({onClick}: IStandardImageProps) => {
   const {images, loading} =  useAppSelector((state: RootState) => state.imageReducer);
-
-  const onDownload = (url: string, name: string) => {
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', name);
-    document.body.appendChild(link);
-    link.click();
-  }
 
   return (
     <Container>
@@ -26,7 +19,7 @@ const StandardImage = () => {
             {images.results.map((item) => (
               <ImageHoverItem
                 key={item.id}
-                onClick={() => onDownload(item.url, item.name)}>
+                onClick={() => onClick(item)}>
                 <img
                   src={`${item.image}`}
                   srcSet={`${item.url}?`}

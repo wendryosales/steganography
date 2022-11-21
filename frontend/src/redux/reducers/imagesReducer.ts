@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import api from '../../services/api';
+import { getImages } from '../actions';
 
-type Image = {
+export type Image = {
   id: string;
   url: string;
   image: string;
@@ -19,14 +20,6 @@ const initialState = {
   loading: false,
   error: null,
 } as ImageState;
-
-export const getImages = createAsyncThunk(
-  'images/getImages',
-  async () => {
-    const response = await api.get('/image/');
-    return response.data;
-  }
-);
 
 export const imageSlice = createSlice({
   name: 'images',
