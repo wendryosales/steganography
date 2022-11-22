@@ -5,6 +5,8 @@ interface DecodeState {
   payload: {
     id: string;
     message: string;
+    image_original: string;
+    image_hidden: string;
   }
   status: string;
   loading: boolean
@@ -15,6 +17,8 @@ const initialState = {
   payload: {
     id: '',
     message: '',
+    image_original: '',
+    image_hidden: '',
   },
   status: 'idle',
   loading: false,
@@ -31,7 +35,7 @@ export const decodeSlice = createSlice({
     },
     [decodeImage.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.status = 'sucess';
+      state.status = 'success';
       state.payload = action.payload;
     },
     [decodeImage.rejected.type]: (state, action) => {

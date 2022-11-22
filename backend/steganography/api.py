@@ -109,10 +109,17 @@ class DecodeViewSet(
         return ImageHiddenSerializer(*args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
-        image = self.get_object()
-        url_image = image.image_hidden
+        obj = self.get_object()
+        url_image = obj.image_hidden
         message_decoded = steganography.decode(url_image)
+        base_url = request.build_absolute_uri().replace(
+            request.get_full_path(), '/'
+        )
+        image_original = request.build_absolute_uri(obj.image.image.url)
         data = {
+            "id": obj.id,
+            "image_original": image_original,
+            "image_hidden": base_url + str(obj.image_hidden),
             'message': message_decoded,
         }
         return Response(
