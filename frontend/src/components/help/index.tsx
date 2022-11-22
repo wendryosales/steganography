@@ -1,3 +1,7 @@
+// React
+import { useState } from 'react';
+
+// Mui
 import HelpIcon from '@mui/icons-material/Help';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -6,7 +10,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from "@mui/material/IconButton";
-import { useState } from 'react';
+
+// Local
 import { Container } from './style';
 
 export const Help = () => {

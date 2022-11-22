@@ -1,16 +1,23 @@
-import SaveIcon from '@mui/icons-material/Save';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
+// React
 import { useEffect, useState } from "react";
+
+// Redux
 import { AnyAction } from 'redux';
-import BreadCrumb from "../../components/breadcrumb";
-import DialogSelect from '../../components/dialogselect';
-import ControlledOpenSpeedDial from "../../components/speed-dial";
-import StandardImage from '../../components/standardmage';
 import { getImages, uploadClose } from '../../redux/actions';
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Image } from '../../redux/reducers/imagesReducer';
 import { RootState } from '../../redux/store';
+
+// Mui
+import SaveIcon from '@mui/icons-material/Save';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+// Local and Project
+import BreadCrumb from "../../components/breadcrumb";
+import DialogSelect from '../../components/dialogselect';
+import ControlledOpenSpeedDial from "../../components/speed-dial";
+import StandardImage from '../../components/standardmage';
 import { Title } from '../SaveList/style';
 import { Page } from "../style";
 

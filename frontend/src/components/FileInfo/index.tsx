@@ -1,7 +1,14 @@
+// React
+import { ReactNode } from 'react';
+
+// Mui
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
+
+// Third
 import { filesize } from "filesize";
-import { ReactNode } from 'react';
+
+// Local
 import { Container, FileContainer, ImagePreview } from "./style";
 import { IFileInfoProps } from "./types";
 

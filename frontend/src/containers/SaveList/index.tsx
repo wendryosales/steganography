@@ -1,13 +1,19 @@
-import SaveIcon from '@mui/icons-material/Save';
+// React
 import { useEffect } from "react";
+
+// Redux
 import { AnyAction } from 'redux';
-import BreadCrumb from "../../components/breadcrumb";
-import ControlledOpenSpeedDial from "../../components/speed-dial";
-import StandardImage from "../../components/standardmage";
 import { getImages } from '../../redux/actions';
 import { useAppDispatch } from "../../redux/hooks";
 import { Image } from '../../redux/reducers/imagesReducer';
 
+// Mui
+import SaveIcon from '@mui/icons-material/Save';
+
+// Local and Project
+import BreadCrumb from "../../components/breadcrumb";
+import ControlledOpenSpeedDial from "../../components/speed-dial";
+import StandardImage from "../../components/standardmage";
 import { Page } from "../style";
 import { Title } from './style';
 

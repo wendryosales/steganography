@@ -1,5 +1,8 @@
+// Mui
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Button from "@mui/material/Button";
+
+// Local
 import { ICopyProps } from './types';
 
 export const Copy = ({ id }: ICopyProps) => {

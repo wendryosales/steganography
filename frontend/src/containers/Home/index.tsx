@@ -1,4 +1,7 @@
+// Third
 import Tilt from 'react-parallax-tilt';
+
+// Local and Project
 import image from "../../assets/background.png";
 import { Help } from '../../components/help';
 import { Image } from '../../components/logo';

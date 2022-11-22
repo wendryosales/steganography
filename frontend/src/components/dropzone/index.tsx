@@ -1,9 +1,18 @@
-import SendIcon from '@mui/icons-material/Send';
-import Fab from "@mui/material/Fab";
+// React
 import { useCallback, useState } from "react";
+
+// Third
 import { useDropzone } from 'react-dropzone';
+
+// Redux
 import { uploadFail, uploadSucess } from '../../redux/actions';
 import { useAppDispatch } from "../../redux/hooks";
+
+// Mui
+import SendIcon from '@mui/icons-material/Send';
+import Fab from "@mui/material/Fab";
+
+// Local and Project
 import api from '../../services/api';
 import BoxLoading from '../boxloading';
 import { FileInfo } from "../FileInfo";

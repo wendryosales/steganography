@@ -1,3 +1,12 @@
+// React
+import * as React from 'react';
+
+// Redux
+import { AnyAction } from 'redux';
+import { encodeImage, uploadSucess } from '../../redux/actions';
+import { useAppDispatch } from '../../redux/hooks';
+
+// Mui
 import DownloadIcon from '@mui/icons-material/Download';
 import EditIcon from '@mui/icons-material/Edit';
 import UndoIcon from '@mui/icons-material/Undo';
@@ -10,10 +19,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
-import * as React from 'react';
-import { AnyAction } from 'redux';
-import { encodeImage, uploadSucess } from '../../redux/actions';
-import { useAppDispatch } from '../../redux/hooks';
+
+// Local and Project
 import { Copy } from '../copy';
 import { DialogSelectContainer, ImageItem } from './style';
 import { IDialogSelectProps } from './types';

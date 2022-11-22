@@ -1,6 +1,9 @@
+// Mui
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
 import CloudOffIcon from '@mui/icons-material/CloudOff';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+// Local
 import { UploadMessage } from './styles/UploadMessage';
 
 export const renderDragMessage = (isDragActive: boolean, isDragReject: boolean) => {

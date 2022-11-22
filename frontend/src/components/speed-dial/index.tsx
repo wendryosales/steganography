@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Material
+// Mui
 import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';

@@ -1,6 +1,11 @@
-import ImageList from '@mui/material/ImageList';
+// Redux
 import { useAppSelector } from "../../redux/hooks";
 import { RootState } from "../../redux/store";
+
+// Mui
+import ImageList from '@mui/material/ImageList';
+
+// Local
 import { Container, ImageHoverItem } from './style';
 import { IStandardImageProps } from './type';
 

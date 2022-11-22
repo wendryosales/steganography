@@ -1,12 +1,17 @@
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
-import BreadCrumb from '../../components/breadcrumb';
-import Dropzone from "../../components/dropzone";
-import ControlledOpenSpeedDial from "../../components/speed-dial";
+// Redux
 import { uploadClose } from '../../redux/actions';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
+
+// Mui
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+// Local and Project
+import BreadCrumb from '../../components/breadcrumb';
+import Dropzone from "../../components/dropzone";
+import ControlledOpenSpeedDial from "../../components/speed-dial";
 import { Page } from "../style";
 
 const UploadPage = () => {

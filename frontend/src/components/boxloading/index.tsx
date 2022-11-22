@@ -1,7 +1,12 @@
+// React
+import { memo } from 'react';
+
+// Mui
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
-import { memo } from 'react';
+
+// Local
 import { Container, LinkContainer } from "./style";
 import { IBoxLoadingProps } from "./types";
 

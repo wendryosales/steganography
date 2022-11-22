@@ -1,4 +1,4 @@
-// Third-party imports
+// Muia
 import HomeIcon from '@mui/icons-material/Home';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
