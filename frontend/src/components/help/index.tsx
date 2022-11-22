@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from "@mui/material/IconButton";
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Container } from './style';
 
 export const Help = () => {
@@ -20,7 +20,6 @@ export const Help = () => {
     setOpen(true);
   };
 
-  const descriptionElementRef = useRef<HTMLElement>(null);
   return (
     <Container>
       <IconButton aria-label="help" onClick={handleClickOpen}>
