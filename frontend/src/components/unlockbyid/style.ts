@@ -59,4 +59,5 @@ export const ContainerMessageBox = styled.div`
   color: #34ec00;
   font-size: 4rem;
   font-family: 'Rubik Distressed', cursive;
+  text-align: center;
 `
