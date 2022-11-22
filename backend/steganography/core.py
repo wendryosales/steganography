@@ -1,5 +1,6 @@
 import math
 import uuid
+import os
 
 from PIL import Image
 
@@ -67,7 +68,10 @@ class Encode(Message):
         """ Save the image """
         new_image = Image.new("RGB", self.image.size)
         new_image.putdata(pixels)
-        path = f"media/images-hidden/{uuid.uuid4().hex}.bmp"
+        directory = "media/images-hidden/"
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        path = f"{directory}{uuid.uuid4().hex}.bmp"
         new_image.save(path, format='BMP')
         return path
 

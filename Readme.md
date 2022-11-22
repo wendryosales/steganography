@@ -33,7 +33,7 @@ Instale as dependências do frontend
 
 Após Clonar o repositório e instalar as dependências do frontend
 
-Suba os containers do banco e os servidores com o comando:
+Volte para a raiz do projeto e suba os containers do banco e os servidores com o comando:
 
 ```bash
   make start
@@ -56,6 +56,13 @@ Crie um superuser caso tenha interesse em acessar o admin:
 
 Caso tenha qualquer problema com os comandos listados no Makefile, você pode utilizar os comando no shell copiando do próprio arquivo.
 
+## Interface
+
+#### O frontend está rodando na porta 3000
+
+```http
+  GET http://localhost:3000/
+```
 
 ## Documentação da API
 
