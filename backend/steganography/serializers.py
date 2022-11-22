@@ -26,6 +26,26 @@ class ImageHiddenSerializer(serializers.ModelSerializer):
         return self.image
 
 
+class ImageHiddenListSerializer(serializers.ModelSerializer):
+    image_hidden = serializers.SerializerMethodField()
+    image_original = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ImageHidden
+        fields = ('id', 'image_original', 'image_hidden')
+
+    def get_image_hidden(self, obj):
+        request = self.context.get('request')
+        base_url = request.build_absolute_uri().replace(
+            request.get_full_path(), '/'
+        )
+        return base_url + str(obj.image_hidden)
+
+    def get_image_original(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(obj.image.image.url)
+
+
 class ImageListSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
 

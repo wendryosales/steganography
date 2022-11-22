@@ -14,15 +14,18 @@ from rest_framework.response import Response
 
 from .core import Steganography
 from .models import Image, ImageHidden
-from .serializers import (ImageHiddenSerializer, ImageListSerializer,
-                          ImageSerializer, RequestImageHiddenSerializer)
+from .serializers import (ImageHiddenListSerializer, ImageHiddenSerializer,
+                          ImageListSerializer, ImageSerializer,
+                          RequestImageHiddenSerializer)
 
 steganography = Steganography()
 
 
 class ImageViewSet(
     ListModelMixin,
-    CreateModelMixin, RetrieveModelMixin, viewsets.GenericViewSet
+    CreateModelMixin,
+    RetrieveModelMixin,
+    viewsets.GenericViewSet,
 ):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
@@ -32,7 +35,7 @@ class ImageViewSet(
         if self.action == "create":
             return ImageSerializer(*args, **kwargs)
         return ImageListSerializer(
-            *args, **kwargs, context={'request': self.request}
+            *args, **kwargs, context={"request": self.request}
         )
 
     def create(self, request, *args, **kwargs):
@@ -42,7 +45,7 @@ class ImageViewSet(
         headers = self.get_success_headers(serializer.data)
         response = {
             "id": response_data.id,
-            "url": f'/image/{response_data.id}',
+            "url": f"/image/{response_data.id}",
             "message": "Image uploaded successfully",
         }
         return Response(
@@ -92,16 +95,28 @@ class EncodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
         )
 
 
-class DecodeViewSet(RetrieveModelMixin, viewsets.GenericViewSet):
+class DecodeViewSet(
+    ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet
+):
     queryset = ImageHidden.objects.all()
     serializer_class = ImageHiddenSerializer
+
+    def get_serializer(self, *args, **kwargs):
+        if self.action == "list":
+            return ImageHiddenListSerializer(
+                *args, **kwargs, context={"request": self.request}
+            )
+        return ImageHiddenSerializer(*args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
         image = self.get_object()
         url_image = image.image_hidden
         message_decoded = steganography.decode(url_image)
+        data = {
+            'message': message_decoded,
+        }
         return Response(
-            {"message": message_decoded}, status=status.HTTP_200_OK
+            data, status=status.HTTP_200_OK
         )
 
 
@@ -114,7 +129,7 @@ def get_media_path(request, path):
     mimetype, encoding = mimetypes.guess_type(path, strict=True)
     if not mimetype:
         mimetype = "text/html"
-    file_path = unquote(
-        os.path.join(settings.MEDIA_ROOT, path)
-    ).encode("utf-8")
+    file_path = unquote(os.path.join(settings.MEDIA_ROOT, path)).encode(
+        "utf-8"
+    )
     return FileResponse(open(file_path, "rb"), content_type=mimetype)
