@@ -42,3 +42,15 @@ export const getImages = createAsyncThunk(
     return response.data;
   }
 );
+
+export const decodeImage = createAsyncThunk(
+  'decode/sendImageToDecode',
+  async (id: string) => {
+    const response = await api.get(`/decode/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  }
+);
